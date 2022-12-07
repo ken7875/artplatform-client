@@ -1,3 +1,77 @@
+<script lang="ts" setup>
+// const getRecommandData = async () => {
+//   const { data } = await useAsyncData('recommandData', () => $fetch('/mock/recommandData'))
+//   console.log(data)
+// }
+
+const recommandData = [
+  {
+    img: '/_nuxt/assets/img/art01.jpg',
+    auth: 'Kemus Wu',
+    title: '瞳孔:流動的脈絡',
+    description: '眼睛，總是吸引著我們的注意力，看、被看，也許眼睛裡有著從另一個世界看我們的世界。'
+  },
+  {
+    img: '/_nuxt/assets/img/art02.jpg',
+    auth: 'Joanne',
+    title: '海洋波度',
+    description: '海洋的奧秘向我們揭示了深不可測的一面，它的深度——反映了我們的恐懼、同時也吸引著我們。'
+  },
+  {
+    img: '/_nuxt/assets/img/art03.jpg',
+    auth: 'Michael',
+    title: '我家窗前的鳥',
+    description:
+      '家門前每天都有不同的小鳥，大多數的小鳥都有特殊能力，特殊能力是什麼我就不說了，希望大家能從作品感受到小鳥的快樂。'
+  }
+]
+
+const rankingData = [
+  {
+    id: 1,
+    img: '/_nuxt/assets/img/art04.jpg',
+    title: '散步遇到的女人',
+    auth: 'Zeo Jiang',
+    price: 300
+  },
+  {
+    id: 2,
+    img: '/_nuxt/assets/img/art05.jpg',
+    title: '爆炸頭的母親',
+    auth: 'Yui',
+    price: 300
+  },
+  {
+    id: 3,
+    img: '/_nuxt/assets/img/art06.jpg',
+    title: '夏天的時候',
+    auth: 'Bug Lin',
+    price: 300
+  },
+  {
+    id: 4,
+    img: '/_nuxt/assets/img/art07.jpg',
+    title: '爆炸頭的母親',
+    auth: 'Yui',
+    price: 300
+  },
+  {
+    id: 5,
+    img: '/_nuxt/assets/img/art08.jpg',
+    title: '爆炸頭的母親',
+    auth: 'Yui',
+    price: 300
+  },
+  {
+    id: 6,
+    img: '/_nuxt/assets/img/art09.jpg',
+    title: '爆炸頭的母親',
+    auth: 'Yui',
+    price: 300
+  }
+]
+</script>
+
 <template>
   <div>
     <div>
@@ -82,77 +156,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts" setup>
-// const getRecommandData = async () => {
-//   const { data } = await useAsyncData('recommandData', () => $fetch('/mock/recommandData'))
-//   console.log(data)
-// }
-
-const recommandData = [
-  {
-    img: '/_nuxt/assets/img/art01.jpg',
-    auth: 'Kemus Wu',
-    title: '瞳孔:流動的脈絡',
-    description: '眼睛，總是吸引著我們的注意力，看、被看，也許眼睛裡有著從另一個世界看我們的世界。'
-  },
-  {
-    img: '/_nuxt/assets/img/art02.jpg',
-    auth: 'Joanne',
-    title: '海洋波度',
-    description: '海洋的奧秘向我們揭示了深不可測的一面，它的深度——反映了我們的恐懼、同時也吸引著我們。'
-  },
-  {
-    img: '/_nuxt/assets/img/art03.jpg',
-    auth: 'Michael',
-    title: '我家窗前的鳥',
-    description:
-      '家門前每天都有不同的小鳥，大多數的小鳥都有特殊能力，特殊能力是什麼我就不說了，希望大家能從作品感受到小鳥的快樂。'
-  }
-]
-
-const rankingData = [
-  {
-    id: 1,
-    img: '/_nuxt/assets/img/art04.jpg',
-    title: '散步遇到的女人',
-    auth: 'Zeo Jiang',
-    price: 300
-  },
-  {
-    id: 2,
-    img: '/_nuxt/assets/img/art05.jpg',
-    title: '爆炸頭的母親',
-    auth: 'Yui',
-    price: 300
-  },
-  {
-    id: 3,
-    img: '/_nuxt/assets/img/art06.jpg',
-    title: '夏天的時候',
-    auth: 'Bug Lin',
-    price: 300
-  },
-  {
-    id: 4,
-    img: '/_nuxt/assets/img/art07.jpg',
-    title: '爆炸頭的母親',
-    auth: 'Yui',
-    price: 300
-  },
-  {
-    id: 5,
-    img: '/_nuxt/assets/img/art08.jpg',
-    title: '爆炸頭的母親',
-    auth: 'Yui',
-    price: 300
-  },
-  {
-    id: 6,
-    img: '/_nuxt/assets/img/art09.jpg',
-    title: '爆炸頭的母親',
-    auth: 'Yui',
-    price: 300
-  }
-]
-</script>
