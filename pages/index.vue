@@ -6,19 +6,19 @@
 
 const recommandData = [
   {
-    img: '/_nuxt/assets/img/art01.jpg',
+    img: 'art01',
     auth: 'Kemus Wu',
     title: '瞳孔:流動的脈絡',
     description: '眼睛，總是吸引著我們的注意力，看、被看，也許眼睛裡有著從另一個世界看我們的世界。'
   },
   {
-    img: '/_nuxt/assets/img/art02.jpg',
+    img: 'art02',
     auth: 'Joanne',
     title: '海洋波度',
     description: '海洋的奧秘向我們揭示了深不可測的一面，它的深度——反映了我們的恐懼、同時也吸引著我們。'
   },
   {
-    img: '/_nuxt/assets/img/art03.jpg',
+    img: 'art03',
     auth: 'Michael',
     title: '我家窗前的鳥',
     description:
@@ -29,42 +29,42 @@ const recommandData = [
 const rankingData = [
   {
     id: 1,
-    img: '/_nuxt/assets/img/art04.jpg',
+    img: 'art04',
     title: '散步遇到的女人',
     auth: 'Zeo Jiang',
     price: 300
   },
   {
     id: 2,
-    img: '/_nuxt/assets/img/art05.jpg',
+    img: 'art05',
     title: '爆炸頭的母親',
     auth: 'Yui',
     price: 300
   },
   {
     id: 3,
-    img: '/_nuxt/assets/img/art06.jpg',
+    img: 'art06',
     title: '夏天的時候',
     auth: 'Bug Lin',
     price: 300
   },
   {
     id: 4,
-    img: '/_nuxt/assets/img/art07.jpg',
+    img: 'art07',
     title: '爆炸頭的母親',
     auth: 'Yui',
     price: 300
   },
   {
     id: 5,
-    img: '/_nuxt/assets/img/art08.jpg',
+    img: 'art08',
     title: '爆炸頭的母親',
     auth: 'Yui',
     price: 300
   },
   {
     id: 6,
-    img: '/_nuxt/assets/img/art09.jpg',
+    img: 'art09',
     title: '爆炸頭的母親',
     auth: 'Yui',
     price: 300
@@ -88,7 +88,7 @@ const rankingData = [
             <p class="wrtting-virtual mb-[1rem] text-[40px] font-bold text-white">Recommend</p>
             <p class="wrtting-virtual whitespace-nowrap text-[20px] font-bold text-white">推薦系列</p>
           </div>
-          <img :src="data.img" :class="i === 0 ? 'lg:w-[70%]' : 'lg:w-[50%]'" />
+          <img :src="`/img/${data.img}.jpg`" :class="i === 0 ? 'lg:w-[70%]' : 'lg:w-[50%]'" />
           <div :class="['mt-[2rem] px-[1.5rem] pb-[1.5rem]', i === 0 ? 'lg:mt-[5rem]' : 'lg:mt-[2rem]']">
             <p class="mb-[1.5rem]">{{ data.auth }}</p>
             <h2 class="mb-[2rem] text-[2rem] font-[900]">
@@ -134,7 +134,7 @@ const rankingData = [
             </p>
           </div>
           <img
-            :src="data.img"
+            :src="`/img/${data.img}.jpg`"
             alt=""
             :class="[data.id <= 3 ? 'w-[25%] lg:h-[374px] lg:w-full' : 'w-[25%]', 'object-cover object-top']"
           />
