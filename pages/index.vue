@@ -117,7 +117,7 @@ const rankingData = [
       <ul class="flex-wrap justify-between lg:flex">
         <li
           :class="[
-            'mb-[1rem] w-[100vw] border-[1px] border-black lg:relative lg:mb-[2rem] lg:w-[30%]',
+            'mb-[1rem] w-[100vw] border-[1px] border-black lg:relative lg:mb-[2rem] lg:h-auto lg:w-[30%]',
             data.id <= 3 ? 'flex lg:block' : 'flex'
           ]"
           v-for="data in rankingData"
@@ -136,14 +136,17 @@ const rankingData = [
           <img
             :src="`/img/${data.img}.jpg`"
             alt=""
-            :class="[data.id <= 3 ? 'w-[25%] lg:h-[374px] lg:w-full' : 'w-[25%]', 'object-cover object-top']"
+            :class="[
+              data.id <= 3 ? 'w-[25%] lg:h-[374px] lg:w-full lg:object-top' : 'w-[25%]',
+              'before:hover:bg-[rgba(0, 0, 0, 0.5)] relative h-[91px] w-[87px] object-cover object-center before:top-0 before:left-0 before:h-[100%] before:w-[100%]'
+            ]"
           />
           <div :class="[data.id <= 3 ? 'w-[70%] lg:w-full' : 'w-[70%]']">
-            <h3 class="my-[1rem] ml-[1rem] text-[1.5rem] font-bold">
+            <h3 class="my-[1rem] ml-[1rem] text-[1rem] font-bold">
               {{ data.title }}
             </h3>
             <hr class="h-[2px] bg-black" />
-            <div class="flex justify-between px-[1rem] py-4">
+            <div class="flex justify-between px-[1rem] py-[0.5rem] text-[12px] font-bold">
               <p>{{ data.auth }}</p>
               <p>{{ data.price }}</p>
             </div>

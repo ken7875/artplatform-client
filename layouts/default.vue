@@ -1,15 +1,10 @@
 <template>
-  <div>
-    <div class="w-screen h-[6rem]">
-      <ul class="flex h-full w-full xl:border-y-2 border-black lg:px-[71px]">
-        <li class="xl:w-[40%] w-[80%] flex items-center">
+  <div class="w-full">
+    <div class="h-[6rem] w-full px-[1rem]">
+      <ul class="flex h-full w-full border-black lg:px-[71px] xl:border-y-2">
+        <li class="flex w-[80%] items-center xl:w-[40%]">
           <h1>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="189.374"
-              height="40.001"
-              viewBox="0 0 189.374 40.001"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="189.374" height="40.001" viewBox="0 0 189.374 40.001">
               <g id="logo" transform="translate(0 0)">
                 <g id="img" transform="translate(0 0)">
                   <path
@@ -18,13 +13,7 @@
                     d="M30,64.508,41.421,40.988,47.87,53.349,62.7,31.507l15.532,33Z"
                     transform="translate(-30 -24.507)"
                   />
-                  <rect
-                    id="Rectangle_18"
-                    data-name="Rectangle 18"
-                    width="10"
-                    height="10"
-                    fill="#e6553b"
-                  />
+                  <rect id="Rectangle_18" data-name="Rectangle 18" width="10" height="10" fill="#e6553b" />
                 </g>
                 <path
                   id="Path_3"
@@ -36,67 +25,60 @@
             </svg>
           </h1>
         </li>
-        <li class="hidden xl:flex w-[60%]">
+        <li class="hidden w-[60%] xl:flex">
           <ul class="flex w-full">
-            <li
-              class="w-[58%] flex items-center justify-around border-x-2 border-black border-collapse"
-            >
+            <li class="flex w-[58%] border-collapse items-center justify-around border-x-2 border-black">
               <input
                 type="text"
-                class="border-none bg-transparent mr-[1.5rem] outline-none"
+                class="mr-[1.5rem] border-none bg-transparent outline-none"
                 placeholder="蒐集作品名稱、藝術家名稱"
               />
               <i class="bi bi-search"></i>
             </li>
-            <li class="w-[14%] flex items-center justify-center">
+            <li class="flex w-[14%] items-center justify-center">
               <p>探索</p>
             </li>
-            <li
-              class="w-[14%] border-x-2 border-black border-collapse flex items-center justify-center"
-            >
+            <li class="flex w-[14%] border-collapse items-center justify-center border-x-2 border-black">
               <p>市值</p>
             </li>
-            <li class="w-[14%] flex items-center justify-center">
-              <i class="bi bi-wallet-fill text-[24px]"></i>
+            <li class="flex w-[14%] items-center justify-center">
+              <i class="bi bi-wallet-fill text-[24px]" @click="openWalletModal = !openWalletModal"></i>
             </li>
           </ul>
         </li>
         <li class="flex items-center xl:hidden">
-          <i class="bi bi-search mr-[1.5rem] font-[900] text-xl"></i>
-          <i
-            v-show="!showMobileMenu"
-            class="bi bi-list text-[2rem]"
-            @click="showMobileMenu = true"
-          ></i>
-          <i
-            v-show="showMobileMenu"
-            class="bi bi-x text-[2rem]"
-            @click="showMobileMenu = false"
-          ></i>
+          <i class="bi bi-search mr-[1.5rem] text-xl font-[900]"></i>
+          <i v-show="!showMobileMenu" class="bi bi-list text-[2rem]" @click="showMobileMenu = true"></i>
+          <i v-show="showMobileMenu" class="bi bi-x text-[2rem]" @click="showMobileMenu = false"></i>
         </li>
       </ul>
     </div>
-    <div :class="['xl:hidden w-screen', showMobileMenu ? 'block' : 'hidden']">
+    <div :class="['w-screen xl:hidden', showMobileMenu ? 'block' : 'hidden']">
       <ul class="w-full px-[12px]">
-        <li class="py-[2rem] border-b-[1px] border-gray-500">
+        <li class="border-b-[1px] border-gray-500 py-[2rem]">
           <p class="text-center text-[20px] font-bold">探索</p>
         </li>
         <li class="py-[2rem]">
           <p class="text-center text-[20px] font-bold">市值</p>
         </li>
         <button
-          class="w-full py-[12px] text-center text-white bg-[#E6553B] mb-[24px] text-[20px] font-bold"
+          class="mb-[24px] w-full bg-[#E6553B] py-[12px] text-center text-[20px] font-bold text-white"
+          @click="openWalletModal = !openWalletModal"
         >
           鏈結錢包
         </button>
       </ul>
     </div>
-    <main class="lg:max-w-[1296px] mx-auto">
+    <main class="mx-auto lg:max-w-[1296px]">
+      <WalletsChoose v-model:openWalletModal="openWalletModal" />
       <slot></slot>
     </main>
   </div>
 </template>
 
 <script setup lang="ts">
-const showMobileMenu = ref(false);
+import WalletsChoose from '@/components/layouts/walletsChoose.vue'
+
+const showMobileMenu = ref(false)
+const openWalletModal = ref(false)
 </script>
