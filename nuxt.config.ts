@@ -6,8 +6,18 @@ export default defineNuxtConfig({
   // alias: {
   //   '/images': resolve(__dirname, '../assets/img'),
   // },
-  modules: ['@nuxtjs/tailwindcss'],
+  runtimeConfig: {
+    // Keys within public, will be also exposed to the client-side
+    public: {
+      apiBase: process.env.API_BASE_URL,
+      otherUrl: process.env.OTHER_URL
+    }
+  },
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
   typescript: {
     typeCheck: true
+  },
+  build: {
+    transpile: ['swiper']
   }
 })

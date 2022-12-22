@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <div class="h-[6rem] w-full px-[1rem]">
+    <div class="h-[6rem] w-full sm:px-[1rem] lg:mb-[40px] lg:px-[unset]">
       <ul class="flex h-full w-full border-black lg:px-[71px] xl:border-y-2">
         <li class="flex w-[80%] items-center xl:w-[40%]">
           <h1>

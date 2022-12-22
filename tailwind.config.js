@@ -10,10 +10,18 @@ module.exports = {
     `${srcDir}/app.{js,ts,vue}`,
     `${srcDir}/Error.{js,ts,vue}`,
     `${srcDir}/error.{js,ts,vue}`
-  ]
-  // theme: {
-  //   fontFamily: {
-  //     sans: ['"PT Sans"', 'sans-serif'],
-  //   },
-  // },
+  ],
+  theme: {
+    extend: {
+      borderWidth: {
+        DEFAULT: '1px'
+      },
+      colors: {
+        primary: '#E6553B'
+      }
+    }
+    // fontFamily: {
+    //   sans: ['"PT Sans"', 'sans-serif'],
+    // }
+  }
 }

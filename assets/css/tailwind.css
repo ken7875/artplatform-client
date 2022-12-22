@@ -17,7 +17,7 @@
     writing-mode: vertical-lr;
   }
   .triangle {
-    @apply relative before:content-[''] before:absolute before:right-0 before:bottom-0 before:border-transparent before:border-[10px] before:border-t-[#E6553B] before:translate-x-[50%] before:translate-y-[50%] before:rotate-[-45deg];
+    @apply relative before:content-[''] before:absolute before:right-0 before:bottom-0 before:border-transparent before:border-[10px] before:border-t-[#E6553B] hover:before:border-t-[#000000] before:translate-x-[50%] before:translate-y-[50%] before:rotate-[-45deg] hover:bg-[#E6553B];
   }
   .stroke-text {
     -webkit-text-stroke: 1px black;
