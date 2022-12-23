@@ -11,6 +11,7 @@ const { data: rankingData } = await useAsyncData('rankingData', () => getRanking
 const { artistsList } = await getArtistsDataList()
 
 let recommandData = ref()
+
 onMounted(() => {
   recommandData.value = [
     {
@@ -34,16 +35,14 @@ onMounted(() => {
     }
   ]
 })
-
+let curSwiperIdx = ref(0)
 const setVSwiperRef = (swiper: any) => {
-  console.log(swiper)
-  swiper.el.swiper.slides.forEach((el: HTMLElement) => {
-    // el.style.height = '262px'
-    // if (i === swiper.activeIndex + 1) {
-    //   el.style.height = '439px'
-    // }
-    el.style.height = '439px'
-  })
+  curSwiperIdx.value = swiper.activeIndex
+  console.log(swiper, curSwiperIdx.value, swiper.activeIndex)
+}
+const slideChanged = (swiper: any) => {
+  curSwiperIdx.value = swiper.activeIndex
+  console.log(swiper, curSwiperIdx.value, swiper.activeIndex)
 }
 const modules = [Pagination]
 </script>
@@ -160,21 +159,26 @@ const modules = [Pagination]
       </div>
       <!-- class="swiper swiper-home" -->
       <!-- calc(-15% + 24px) -->
-      <swiper :modules="modules" :slides-per-view="3" :spaceBetween="0" :auto-height="true" @swiper="setVSwiperRef">
-        <swiper-slide v-for="(artist, i) in artistsList" :key="i">
-          <div
-            :class="[
-              artist.img,
-              i === 1 ? 'h-[439px] w-[636px]' : 'h-[262px] w-[306px]',
-              'bg-cover p-[24px]',
-              {
-                'ml-[calc(-29.1%+24px)] mr-[200px]': i === 1,
-                'ml-[calc(23.7%+24px)]': i === 2,
-                'mt-[calc(50%-131px)]': i !== 1
-              }
-            ]"
-          >
-            <template v-if="i === 1">
+      <swiper
+        :modules="modules"
+        :slides-per-view="3"
+        :spaceBetween="24"
+        :auto-height="true"
+        @slideChange="slideChanged"
+        @swiper="setVSwiperRef"
+        :centeredSlides="true"
+      >
+        <swiper-slide
+          v-for="(artist, i) in artistsList"
+          :key="i"
+          :style="{
+            width: i === curSwiperIdx ? '636px' : '306px',
+            height: i === curSwiperIdx ? '439px' : '262px'
+          }"
+          class="self-center"
+        >
+          <div :class="[artist.img, 'h-full bg-cover p-[24px]']">
+            <template v-if="i === curSwiperIdx">
               <h3 class="whitespace-pre-wrap text-[4rem] leading-[5rem] text-white">
                 <span class="block">{{ artist.splitName.first }}</span>
                 <span class="block">{{ artist.splitName.last }}</span>
@@ -188,9 +192,6 @@ const modules = [Pagination]
             </template>
           </div>
         </swiper-slide>
-        <!-- <swiper-slide>123</swiper-slide>
-        <swiper-slide>123</swiper-slide> -->
-        <!-- class="slide slide-page slide1" -->
       </swiper>
       <div
         :class="['h-[8px] w-[8px] bg-black', { 'w-[16px] bg-primary': i === 2 }]"
