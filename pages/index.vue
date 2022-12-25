@@ -35,16 +35,34 @@ onMounted(() => {
     }
   ]
 })
+
+// swiper
 let curSwiperIdx = ref(0)
 const setVSwiperRef = (swiper: any) => {
   curSwiperIdx.value = swiper.activeIndex
-  console.log(swiper, curSwiperIdx.value, swiper.activeIndex)
 }
 const slideChanged = (swiper: any) => {
   curSwiperIdx.value = swiper.activeIndex
-  console.log(swiper, curSwiperIdx.value, swiper.activeIndex)
 }
 const modules = [Pagination]
+
+let calcSliderSize = (idx: number) => {
+  let sliderSize = {}
+  const isDesktop = size().device.value === 'desktop'
+  if (isDesktop) {
+    sliderSize = {
+      width: idx === curSwiperIdx.value ? '636px' : '306px',
+      height: idx === curSwiperIdx.value ? '439px' : '262px',
+      transition: idx === curSwiperIdx.value ? '1s 0.1s' : 'unset'
+    }
+  } else {
+    sliderSize = {
+      height: 'auto'
+    }
+  }
+
+  return sliderSize
+}
 </script>
 
 <template>
@@ -86,9 +104,9 @@ const modules = [Pagination]
         </li>
       </ul>
       <div class="mb-[48px] flex items-end justify-between border-b-2 border-black font-[900]">
-        <div class="mb-[16px] flex items-end">
+        <div class="mb-[8px] flex items-end lg:mb-[16px]">
           <h2 class="mr-[16px] text-[2rem]">Ranking</h2>
-          <p>市價排行榜</p>
+          <p class="hidden lg:block">市價排行榜</p>
         </div>
         <p class="triangle px-[48px] py-[8px]">more</p>
       </div>
@@ -149,55 +167,73 @@ const modules = [Pagination]
         </li>
       </ul>
     </div>
+    <!-- 熱門藝術家 -->
     <div>
       <div class="mb-[48px] flex items-end justify-between border-b-2 border-black font-[900]">
-        <div class="mb-[16px] flex items-end">
+        <div class="mb-[8px] flex items-end lg:mb-[16px]">
           <h2 class="mr-[16px] text-[2rem]">Artist</h2>
-          <p>熱門藝術家</p>
+          <p class="hidden lg:block">熱門藝術家</p>
         </div>
         <p class="triangle border-black px-[48px] py-[8px] hover:border">more</p>
       </div>
       <!-- class="swiper swiper-home" -->
       <!-- calc(-15% + 24px) -->
-      <swiper
-        :modules="modules"
-        :slides-per-view="3"
-        :spaceBetween="24"
-        :auto-height="true"
-        @slideChange="slideChanged"
-        @swiper="setVSwiperRef"
-        :centeredSlides="true"
-      >
-        <swiper-slide
-          v-for="(artist, i) in artistsList"
-          :key="i"
-          :style="{
-            width: i === curSwiperIdx ? '636px' : '306px',
-            height: i === curSwiperIdx ? '439px' : '262px'
-          }"
-          class="self-center"
+      <div class="h-auto lg:h-[487px]">
+        <swiper
+          :modules="modules"
+          :auto-height="true"
+          :slidesPerView="size().device.value === 'desktop' ? 'auto' : 1"
+          :spaceBetween="24"
+          :centeredSlides="true"
+          @slideChange="slideChanged"
+          @swiper="setVSwiperRef"
         >
-          <div :class="[artist.img, 'h-full bg-cover p-[24px]']">
-            <template v-if="i === curSwiperIdx">
-              <h3 class="whitespace-pre-wrap text-[4rem] leading-[5rem] text-white">
-                <span class="block">{{ artist.splitName.first }}</span>
-                <span class="block">{{ artist.splitName.last }}</span>
-              </h3>
-              <div class="flex justify-between">
-                <div class="w-[307px] bg-[rgba(255,255,255,0.5)] p-[24px]">
+          <swiper-slide v-for="(artist, i) in artistsList" :key="i" :style="calcSliderSize(i)" class="self-center">
+            <div
+              :class="[artist.img, 'flex h-full flex-col justify-between self-center bg-cover p-[24px]']"
+              v-if="$device.isDesktop"
+            >
+              <template v-if="i === curSwiperIdx">
+                <h3 class="whitespace-pre-wrap text-[4rem] leading-[5rem] text-white">
+                  <span class="block">{{ artist.splitName.first }}</span>
+                  <span class="block">{{ artist.splitName.last }}</span>
+                </h3>
+                <div class="flex items-end justify-between">
+                  <div class="w-[307px] bg-[rgba(255,255,255,0.5)] p-[24px]">
+                    <p class="text-[1rem]">{{ artist.description }}</p>
+                  </div>
+                  <BaseButton :text="'MORE'" />
+                </div>
+              </template>
+            </div>
+            <div class="h-[500px]" v-else>
+              <div :class="[artist.img, 'flex h-[232px] w-full justify-between p-[24px]']">
+                <h3 class="self-start whitespace-pre-wrap text-[2rem] leading-[5rem] text-white">
+                  {{ artist.name }}
+                </h3>
+                <BaseButton :text="'MORE'" class="self-end" />
+              </div>
+              <div class="mt-[16px] flex w-full items-end justify-between">
+                <div class="w-full bg-[rgba(255,255,255,0.5)] p-[24px]">
                   <p class="text-[1rem]">{{ artist.description }}</p>
                 </div>
-                <BaseButton :text="'MORE'" />
               </div>
-            </template>
-          </div>
-        </swiper-slide>
-      </swiper>
-      <div
-        :class="['h-[8px] w-[8px] bg-black', { 'w-[16px] bg-primary': i === 2 }]"
-        v-for="i in artistsList.length"
-        :key="i"
-      ></div>
+            </div>
+          </swiper-slide>
+        </swiper>
+      </div>
+      <ul class="mb-[80px] flex justify-center lg:mb-[80px]">
+        <li
+          v-for="i in artistsList.length"
+          :key="i"
+          :class="['mr-[8px] h-[8px] w-[8px] bg-black', { 'w-[16px] bg-primary': i - 1 === curSwiperIdx }]"
+        ></li>
+      </ul>
+    </div>
+    <!-- 最新藝術品 -->
+    <div class="mb-[8px] flex items-end lg:mb-[16px]">
+      <h2 class="mr-[16px] text-[2rem]">Artwork</h2>
+      <p class="hidden lg:block">最新藝術品</p>
     </div>
   </div>
 </template>

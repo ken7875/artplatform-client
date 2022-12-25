@@ -6,6 +6,7 @@ interface Options {
 export default (url: string, options: Options): Promise<any> => {
   const runtimeConfig = useRuntimeConfig()
   const baseURL = runtimeConfig.public.apiBase
+  console.log(baseURL)
   const apiFetch = $fetch.create({ baseURL })
   const authToken = useCookie('HKToken', { default: undefined })
   return apiFetch(url, {
@@ -23,7 +24,6 @@ export default (url: string, options: Options): Promise<any> => {
     },
     async onResponse({ response }) {
       // Process the response data
-      console.log(response, 'response')
       return response._data
     },
     async onResponseError({ request, response, options }) {

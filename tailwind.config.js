@@ -18,6 +18,10 @@ module.exports = {
       },
       colors: {
         primary: '#E6553B'
+      },
+      transitionProperty: {
+        width: 'width',
+        height: 'height'
       }
     }
     // fontFamily: {

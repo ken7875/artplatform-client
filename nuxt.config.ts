@@ -13,7 +13,7 @@ export default defineNuxtConfig({
       otherUrl: process.env.OTHER_URL
     }
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@nuxtjs/device'],
   typescript: {
     typeCheck: true
   },

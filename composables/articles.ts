@@ -19,7 +19,6 @@ export const getArtistsDataList = async () => {
 
       return item
     })
-    console.log(artistsList)
   }
   return { artistsList }
 }
