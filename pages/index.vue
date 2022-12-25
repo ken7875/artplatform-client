@@ -1,8 +1,10 @@
 <script lang="ts" setup>
 import { getRankingProductsApi } from '~~/api/product'
+import { useProducts } from '@/store/products'
 // import { getArtistsDataList } from '@/composable/articles'
 import BaseButton from '@/components/button.vue'
 import { Pagination } from 'swiper'
+import { storeToRefs } from 'pinia'
 // import { Ref } from 'vue'
 // import Swiper, { Pagination } from 'swiper'
 // import 'swiper/swiper.scss'
@@ -47,13 +49,13 @@ const slideChanged = (swiper: any) => {
 const modules = [Pagination]
 
 let calcSliderSize = (idx: number) => {
+  const { isDesktop } = useDevice()
   let sliderSize = {}
-  const isDesktop = size().device.value === 'desktop'
   if (isDesktop) {
     sliderSize = {
       width: idx === curSwiperIdx.value ? '636px' : '306px',
       height: idx === curSwiperIdx.value ? '439px' : '262px',
-      transition: idx === curSwiperIdx.value ? '1s 0.1s' : 'unset'
+      transition: idx === curSwiperIdx.value && isDesktop ? '1s 0.1s' : 'unset'
     }
   } else {
     sliderSize = {
@@ -63,6 +65,12 @@ let calcSliderSize = (idx: number) => {
 
   return sliderSize
 }
+
+const productsStore = useProducts()
+
+const { getNewestProducts } = productsStore
+const { newestProducts } = storeToRefs(productsStore)
+await getNewestProducts()
 </script>
 
 <template>
@@ -182,8 +190,8 @@ let calcSliderSize = (idx: number) => {
         <swiper
           :modules="modules"
           :auto-height="true"
-          :slidesPerView="size().device.value === 'desktop' ? 'auto' : 1"
-          :spaceBetween="24"
+          :slidesPerView="$device.isDesktop ? 'auto' : 1"
+          :spaceBetween="$device.isDesktop ? 24 : 0"
           :centeredSlides="true"
           @slideChange="slideChanged"
           @swiper="setVSwiperRef"
@@ -231,9 +239,26 @@ let calcSliderSize = (idx: number) => {
       </ul>
     </div>
     <!-- 最新藝術品 -->
-    <div class="mb-[8px] flex items-end lg:mb-[16px]">
-      <h2 class="mr-[16px] text-[2rem]">Artwork</h2>
-      <p class="hidden lg:block">最新藝術品</p>
+    <div>
+      <div class="mb-[48px] flex items-end justify-between border-b-2 border-black font-[900]">
+        <div class="mb-[8px] flex items-end lg:mb-[16px]">
+          <h2 class="mr-[16px] text-[2rem]">Artwork</h2>
+          <p class="hidden lg:block">最新藝術品</p>
+        </div>
+        <p class="triangle border-black px-[48px] py-[8px] hover:border">more</p>
+      </div>
+      <ul class="grid w-full grid-cols-4 grid-rows-5">
+        <li
+          v-for="(product, i) in newestProducts"
+          :key="i"
+          :class="[
+            (i % 2 === 0 && i <= 4) || (i % 2 !== 0 && i > 4) ? 'row-span-2' : 'row-span-1',
+            { 'row-span-3': i === 1 && i <= 4 }
+          ]"
+        >
+          <p>{{ product.description }}</p>
+        </li>
+      </ul>
     </div>
   </div>
 </template>

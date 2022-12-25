@@ -8,3 +8,9 @@ export const getRankingProductsApi = () => {
     method: 'GET'
   })
 }
+
+export const getNewestProductsApi = () => {
+  return customFetch('/products/newest', {
+    method: 'GET'
+  })
+}
