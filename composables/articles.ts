@@ -15,7 +15,7 @@ export const getArtistsDataList = async () => {
         first: item.name.split(' ')[0],
         last: item.name.split(' ')[1]
       }
-      item.img = `bg-[url('/img/${item.img}.jpg')]`
+      item.imgUrl = `/img/${item.img}.jpg`
 
       return item
     })

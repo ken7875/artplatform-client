@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { getNewestProductsApi } from '@/api/product'
 
-type NewestData = Omit<RankingData, 'auth'> & { description: string }
+type NewestData = Omit<RankingData, 'auth'> & { description: string; imgUrl: string }
 
 interface State {
   newestProducts: NewestData[]
@@ -15,11 +15,12 @@ export const useProducts = defineStore('artistStore', {
     async getNewestProducts() {
       const newestProducts = await getNewestProductsApi()
       this.newestProducts = newestProducts?.data.map((item: NewestData) => {
-        item.img = `bg-[url('/img/${item.img}.jpg')]`
+        item.imgUrl = `bg-[url('/img/${item.img}.jpg')]`
+        // bg-[url('/img/hero-pattern.svg')]
 
         return item
       })
-      console.log(this.newestProducts)
+      //   console.log(this.newestProducts)
     }
   }
 })

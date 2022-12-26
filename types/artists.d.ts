@@ -8,6 +8,7 @@ interface StatisticsData {
 interface ArtistsList {
   name: string,
   img: string,
+  imgUrl: string,
   id: string,
   social: string[],
   description: string,

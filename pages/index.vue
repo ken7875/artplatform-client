@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { getRankingProductsApi } from '~~/api/product'
 import { useProducts } from '@/store/products'
-// import { getArtistsDataList } from '@/composable/articles'
+import { getArtistsDataList } from '@/composables/articles'
 import BaseButton from '@/components/button.vue'
 import { Pagination } from 'swiper'
 import { storeToRefs } from 'pinia'
@@ -197,9 +197,11 @@ await getNewestProducts()
           @swiper="setVSwiperRef"
         >
           <swiper-slide v-for="(artist, i) in artistsList" :key="i" :style="calcSliderSize(i)" class="self-center">
+            <!-- artist.imgUrl -->
             <div
-              :class="[artist.img, 'flex h-full flex-col justify-between self-center bg-cover p-[24px]']"
+              :class="['flex h-full flex-col justify-between self-center bg-cover p-[24px]']"
               v-if="$device.isDesktop"
+              :style="{ backgroundImage: `url('/img/${artist.img}.jpg')` }"
             >
               <template v-if="i === curSwiperIdx">
                 <h3 class="whitespace-pre-wrap text-[4rem] leading-[5rem] text-white">
@@ -215,7 +217,7 @@ await getNewestProducts()
               </template>
             </div>
             <div class="h-[500px]" v-else>
-              <div :class="[artist.img, 'flex h-[232px] w-full justify-between p-[24px]']">
+              <div :class="['flex h-[232px] w-full justify-between p-[24px]']">
                 <h3 class="self-start whitespace-pre-wrap text-[2rem] leading-[5rem] text-white">
                   {{ artist.name }}
                 </h3>
@@ -255,6 +257,7 @@ await getNewestProducts()
             (i % 2 === 0 && i <= 4) || (i % 2 !== 0 && i > 4) ? 'row-span-2' : 'row-span-1',
             { 'row-span-3': i === 1 && i <= 4 }
           ]"
+          :style="{ backgroundImage: `url('/img/${product.img}.jpg')` }"
         >
           <p>{{ product.description }}</p>
         </li>
