@@ -5,6 +5,7 @@ import { getArtistsDataList } from '@/composables/articles'
 import BaseButton from '@/components/button.vue'
 import { Pagination } from 'swiper'
 import { storeToRefs } from 'pinia'
+import MasonryWall from '@yeger/vue-masonry-wall'
 // import { Ref } from 'vue'
 // import Swiper, { Pagination } from 'swiper'
 // import 'swiper/swiper.scss'
@@ -249,19 +250,19 @@ await getNewestProducts()
         </div>
         <p class="triangle border-black px-[48px] py-[8px] hover:border">more</p>
       </div>
-      <ul class="grid w-full grid-cols-4 grid-rows-5">
-        <li
-          v-for="(product, i) in newestProducts"
-          :key="i"
-          :class="[
-            (i % 2 === 0 && i <= 4) || (i % 2 !== 0 && i > 4) ? 'row-span-2' : 'row-span-1',
-            { 'row-span-3': i === 1 && i <= 4 }
-          ]"
-          :style="{ backgroundImage: `url('/img/${product.img}.jpg')` }"
-        >
+      <!-- <ul class="w-full">
+        <li v-for="(product, i) in newestProducts" :key="i">
+          <img :src="`/img/${product.img}.jpg`" alt="" :class="{ 'h-[327px]': i === 1 }" />
           <p>{{ product.description }}</p>
         </li>
-      </ul>
+      </ul> -->
+      <MasonryWall :items="newestProducts" :ssr-columns="1" :column-width="100" :gap="16">
+        <template #default="{ item, index }">
+          <div :style="{ height: `${item}px` }" class="card flex items-center justify-center">
+            {{ index }}
+          </div>
+        </template>
+      </MasonryWall>
     </div>
   </div>
 </template>

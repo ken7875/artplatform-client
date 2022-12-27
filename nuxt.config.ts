@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     // Keys within public, will be also exposed to the client-side
     // 'http://localhost:3001/api/artplatform'
     public: {
-      apiBase: process.env.API_BASE_URL,
+      apiBase: 'http://localhost:3001/api/artplatform',
       otherUrl: process.env.OTHER_URL
     }
   },
