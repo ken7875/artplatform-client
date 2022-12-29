@@ -49,8 +49,9 @@ const slideChanged = (swiper: any) => {
 }
 const modules = [Pagination]
 
+const { isDesktop } = useDevice()
+
 let calcSliderSize = (idx: number) => {
-  const { isDesktop } = useDevice()
   let sliderSize = {}
   if (isDesktop) {
     sliderSize = {
@@ -67,11 +68,34 @@ let calcSliderSize = (idx: number) => {
   return sliderSize
 }
 
+// newest products
 const productsStore = useProducts()
 
 const { getNewestProducts } = productsStore
 const { newestProducts } = storeToRefs(productsStore)
 await getNewestProducts()
+
+// mansory
+const mansoryHeight = isDesktop ? [358, 431, 358, 273, 278, 358, 449, 358] : [191, 203, 145, 225, 244, 151]
+
+const mansoryImgHeihgt = (index: number) => {
+  return isDesktop
+    ? {
+        'h-[254px]': index === 0 || index === 2 || index === 5 || index === 7,
+        'h-[327px]': index === 1,
+        'h-[169px]': index === 3,
+        'h-[174px]': index === 4,
+        'h-[395px]': index === 6
+      }
+    : {
+        'h-[139px]': index === 0,
+        'h-[151px]': index === 1,
+        'h-[93px]': index === 2,
+        'h-[173px]': index === 3,
+        'h-[192px]': index === 4,
+        'h-[99px]': index === 5
+      }
+}
 </script>
 
 <template>
@@ -112,7 +136,7 @@ await getNewestProducts()
           </div>
         </li>
       </ul>
-      <div class="mb-[48px] flex items-end justify-between border-b-2 border-black font-[900]">
+      <div class="mb-[48px] flex items-end justify-between border-b-2 border-black px-[12px] font-[900] lg:px-[0]">
         <div class="mb-[8px] flex items-end lg:mb-[16px]">
           <h2 class="mr-[16px] text-[2rem]">Ranking</h2>
           <p class="hidden lg:block">市價排行榜</p>
@@ -177,7 +201,7 @@ await getNewestProducts()
       </ul>
     </div>
     <!-- 熱門藝術家 -->
-    <div>
+    <div class="px-[12px] lg:px-[0]">
       <div class="mb-[48px] flex items-end justify-between border-b-2 border-black font-[900]">
         <div class="mb-[8px] flex items-end lg:mb-[16px]">
           <h2 class="mr-[16px] text-[2rem]">Artist</h2>
@@ -218,7 +242,10 @@ await getNewestProducts()
               </template>
             </div>
             <div class="h-[500px]" v-else>
-              <div :class="['flex h-[232px] w-full justify-between p-[24px]']">
+              <div
+                :class="['flex h-[232px] w-full justify-between bg-cover p-[24px]']"
+                :style="{ backgroundImage: `url('/img/${artist.img}.jpg')` }"
+              >
                 <h3 class="self-start whitespace-pre-wrap text-[2rem] leading-[5rem] text-white">
                   {{ artist.name }}
                 </h3>
@@ -242,7 +269,7 @@ await getNewestProducts()
       </ul>
     </div>
     <!-- 最新藝術品 -->
-    <div>
+    <div class="px-[12px] lg:px-[0]">
       <div class="mb-[48px] flex items-end justify-between border-b-2 border-black font-[900]">
         <div class="mb-[8px] flex items-end lg:mb-[16px]">
           <h2 class="mr-[16px] text-[2rem]">Artwork</h2>
@@ -256,10 +283,30 @@ await getNewestProducts()
           <p>{{ product.description }}</p>
         </li>
       </ul> -->
-      <MasonryWall :items="newestProducts" :ssr-columns="1" :column-width="100" :gap="16">
+      <MasonryWall
+        :items="mansoryHeight"
+        :ssr-columns="1"
+        :column-width="$device.isDesktop ? 306 : 156"
+        :gap="$device.isDesktop ? 24 : 32"
+      >
         <template #default="{ item, index }">
-          <div :style="{ height: `${item}px` }" class="card flex items-center justify-center">
-            {{ index }}
+          <div :style="{ height: `${item}px` }" class="lg:border-b-2 lg:border-black">
+            <div class="group relative bg-[#FFFFFF] p-[24px]">
+              <img
+                :src="`/img/${newestProducts[index].img}.jpg`"
+                alt="newest products image"
+                :class="[mansoryImgHeihgt(index), 'w-full object-cover']"
+              />
+              <div
+                class="invisible absolute top-[50%] left-[50%] flex h-[calc(100%-48px)] w-[calc(100%-48px)] translate-x-[-50%] translate-y-[-50%] flex-col justify-between bg-[rgba(0,0,0,0.5)] p-[16px] group-hover:visible"
+              >
+                <p class="m-[8px] font-[700] text-white">{{ newestProducts[index].description }}</p>
+                <BaseButton :text="'MORE'" class="self-end" />
+              </div>
+            </div>
+            <p class="my-[8px] text-[0.9rem] font-[900] md:my-[1rem] md:text-[1.2rem]">
+              {{ newestProducts[index].title }}
+            </p>
           </div>
         </template>
       </MasonryWall>
